@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Product — Kahaf Fashion</title>
+
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;1,500&display=swap"
+    rel="stylesheet"
+>
+
+
+<link
+    rel="stylesheet"
+    href="./css/style.css"
+>
+
+
+<style>
+
+    /* =========================================
+       PRODUCT GALLERY
+    ========================================= */
+
+    .product-gallery {
+        width: 100%;
+        max-width: 650px;
+    }
+
+
+    .main-image-wrapper {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4 / 5;
+        background: #f4f2ef;
+        border-radius: 14px;
+        overflow: hidden;
+        cursor: zoom-in;
+    }
+
+
+    .main-product-image {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        transition:
+            opacity 0.25s ease,
+            transform 0.4s ease;
+    }
+
+
+    .main-product-image:hover {
+        transform: scale(1.02);
+    }
+
+
+    /* =========================================
+       ARROWS
+    ========================================= */
+
+    .gallery-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+        width: 46px;
+        height: 46px;
+
+        border: none;
+        border-radius: 50%;
+
+        background: rgba(255, 255, 255, 0.92);
+
+        color: #111;
+
+        font-size: 24px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        cursor: pointer;
+
+        z-index: 5;
+
+        box-shadow:
+            0 4px 18px rgba(0,0,0,0.12);
+
+        transition:
+            transform 0.2s ease,
+            background 0.2s ease;
+    }
+
+
+    .gallery-arrow:hover {
+        background: #fff;
+        transform:
+            translateY(-50%)
+            scale(1.08);
+    }
+
+
+    .gallery-prev {
+        left: 16px;
+    }
+
+
+    .gallery-next {
+        right: 16px;
+    }
+
+
+    /* =========================================
+       IMAGE COUNTER
+    ========================================= */
+
+    .image-counter {
+        position: absolute;
+
+        bottom: 16px;
+        left: 50%;
+
+        transform: translateX(-50%);
+
+        background: rgba(0,0,0,0.65);
+
+        color: white;
+
+        padding: 6px 13px;
+
+        border-radius: 20px;
+
+        font-size: 13px;
+
+        letter-spacing: 0.5px;
+
+        z-index: 5;
+    }
+
+
+    /* =========================================
+       THUMBNAILS
+    ========================================= */
+
+    .thumbnail-container {
+
+        display: flex;
+
+        gap: 10px;
+
+        margin-top: 14px;
+
+        overflow-x: auto;
+
+        padding-bottom: 5px;
+
+        scrollbar-width: thin;
+    }
+
+
+    .thumbnail {
+
+        width: 78px;
+        height: 94px;
+
+        flex: 0 0 auto;
+
+        object-fit: cover;
+
+        border-radius: 8px;
+
+        cursor: pointer;
+
+        border: 2px solid transparent;
+
+        opacity: 0.65;
+
+        transition:
+            opacity 0.2s ease,
+            border 0.2s ease,
+            transform 0.2s ease;
+    }
+
+
+    .thumbnail:hover {
+
+        opacity: 1;
+
+        transform: translateY(-2px);
+    }
+
+
+    .thumbnail.active {
+
+        opacity: 1;
+
+        border-color: #111;
+    }
+
+
+    /* =========================================
+       LIGHTBOX / ZOOM
+    ========================================= */
+
+    .image-lightbox {
+
+        position: fixed;
+
+        inset: 0;
+
+        background: rgba(0,0,0,0.94);
+
+        display: none;
+
+        align-items: center;
+
+        justify-content: center;
+
+        z-index: 9999;
+
+        padding: 30px;
+    }
+
+
+    .image-lightbox.active {
+
+        display: flex;
+    }
+
+
+    .lightbox-image {
+
+        max-width: 95vw;
+
+        max-height: 90vh;
+
+        object-fit: contain;
+
+        border-radius: 5px;
+
+        user-select: none;
+    }
+
+
+    .lightbox-close {
+
+        position: absolute;
+
+        top: 20px;
+
+        right: 25px;
+
+        width: 45px;
+
+        height: 45px;
+
+        border: none;
+
+        border-radius: 50%;
+
+        background: rgba(255,255,255,0.12);
+
+        color: white;
+
+        font-size: 30px;
+
+        cursor: pointer;
+
+        z-index: 10;
+    }
+
+
+    .lightbox-arrow {
+
+        position: absolute;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        width: 50px;
+
+        height: 50px;
+
+        border: none;
+
+        border-radius: 50%;
+
+        background: rgba(255,255,255,0.15);
+
+        color: white;
+
+        font-size: 28px;
+
+        cursor: pointer;
+
+        z-index: 10;
+    }
+
+
+    .lightbox-arrow:hover {
+
+        background: rgba(255,255,255,0.28);
+    }
+
+
+    .lightbox-prev {
+        left: 25px;
+    }
+
+
+    .lightbox-next {
+        right: 25px;
+    }
+
+
+    /* =========================================
+       NO IMAGE
+    ========================================= */
+
+    .no-product-image {
+
+        width: 100%;
+
+        height: 100%;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        color: #999;
+
+        font-size: 14px;
+
+        letter-spacing: 2px;
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 768px) {
+
+        .product-gallery {
+            max-width: 100%;
+        }
+
+
+        .main-image-wrapper {
+            border-radius: 10px;
+            aspect-ratio: 4 / 5;
+        }
+
+
+        .gallery-arrow {
+
+            width: 40px;
+            height: 40px;
+
+            font-size: 20px;
+        }
+
+
+        .gallery-prev {
+            left: 10px;
+        }
+
+
+        .gallery-next {
+            right: 10px;
+        }
+
+
+        .thumbnail {
+
+            width: 65px;
+            height: 78px;
+        }
+
+
+        .image-lightbox {
+            padding: 10px;
+        }
+
+
+        .lightbox-arrow {
+
+            width: 42px;
+            height: 42px;
+
+            font-size: 22px;
+        }
+
+
+        .lightbox-prev {
+            left: 10px;
+        }
+
+
+        .lightbox-next {
+            right: 10px;
+        }
+
+    }
+
+</style>
+
+</head>
+
+<div class="back-button-wrapper">
+    <button
+        class="back-button"
+        onclick="goBack()"
+    >
+        ← Back
+    </button>
+</div>
+
+<script>
+    function goBack() {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.href = "index.html";
+        }
+    }
+</script>
+
+<body>
+
+<header class="navbar">
+
+
+<a href="index.html" class="logo">
+
+    KAHAF <span>FASHION</span>
+
+</a>
+
+
+<nav>
+
+    <a href="index.html">
+        Home
+    </a>
+
+    <a href="shop.html">
+        Shop
+    </a>
+
+</nav>
+
+
+</header>
+
+<main
+    class="product-detail"
+    id="productDetail"
+>
+
+
+<p>
+    Loading product...
+</p>
+
+
+</main>
+
+<!-- =========================================
+     LIGHTBOX
+========================================= -->
+
+<div
+    class="image-lightbox"
+    id="imageLightbox"
+>
+
+
+<button
+    class="lightbox-close"
+    id="lightboxClose"
+    aria-label="Close"
+>
+    ×
+</button>
+
+
+<button
+    class="lightbox-arrow lightbox-prev"
+    id="lightboxPrev"
+    aria-label="Previous image"
+>
+    ‹
+</button>
+
+
+<img
+    class="lightbox-image"
+    id="lightboxImage"
+    alt="Product image"
+>
+
+
+<button
+    class="lightbox-arrow lightbox-next"
+    id="lightboxNext"
+    aria-label="Next image"
+>
+    ›
+</button>
+
+</div>
+
+<script type="module">
+
+
+import {
+
+    getProduct,
+
+    getProductImages,
+
+    createWhatsAppLink
+
+} from "./js/products.js";
+
+
+
+/* =========================================
+   GET PRODUCT ID
+========================================= */
+
+
+const params =
+
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const productId =
+
+    params.get("id");
+
+
+
+const container =
+
+    document.getElementById(
+        "productDetail"
+    );
+
+
+
+/* =========================================
+   GALLERY VARIABLES
+========================================= */
+
+
+let images = [];
+
+let currentIndex = 0;
+
+
+
+/* =========================================
+   LOAD PRODUCT
+========================================= */
+
+
+async function loadProduct() {
+
+    if (!productId) {
+
+        container.innerHTML =
+            "<h1>Product not found.</h1>";
+
+        return;
+    }
+
+
+    const product =
+
+        await getProduct(productId);
+
+
+    if (!product) {
+
+        container.innerHTML =
+            "<h1>Product not found.</h1>";
+
+        return;
+    }
+
+
+
+    /* Get Firestore images[] */
+
+    images =
+
+        getProductImages(product);
+
+
+
+    /* =====================================
+       PRODUCT HTML
+    ===================================== */
+
+    container.innerHTML = `
+
+        <div class="product-gallery">
+
+
+            <div
+                class="main-image-wrapper"
+                id="mainImageWrapper"
+            >
+
+                ${
+                    images.length > 0
+
+                    ?
+
+                    `
+                    <img
+                        class="main-product-image"
+                        id="mainProductImage"
+                        src="${images[0]}"
+                        alt="${product.name || "Product"}"
+                    >
+                    `
+
+                    :
+
+                    `
+                    <div class="no-product-image">
+                        KAHAF FASHION
+                    </div>
+                    `
+                }
+
+
+                ${
+                    images.length > 1
+
+                    ?
+
+                    `
+
+                    <button
+                        class="gallery-arrow gallery-prev"
+                        id="galleryPrev"
+                        aria-label="Previous image"
+                    >
+                        ‹
+                    </button>
+
+
+                    <button
+                        class="gallery-arrow gallery-next"
+                        id="galleryNext"
+                        aria-label="Next image"
+                    >
+                        ›
+                    </button>
+
+
+                    <div
+                        class="image-counter"
+                        id="imageCounter"
+                    >
+                        1 / ${images.length}
+                    </div>
+
+                    `
+
+                    :
+
+                    ""
+
+                }
+
+            </div>
+
+
+
+            ${
+                images.length > 1
+
+                ?
+
+                `
+
+                <div
+                    class="thumbnail-container"
+                    id="thumbnailContainer"
+                >
+
+                    ${images.map(
+
+                        (image, index) => `
+
+                        <img
+
+                            class="thumbnail ${
+                                index === 0
+                                    ? "active"
+                                    : ""
+                            }"
+
+                            src="${image}"
+
+                            alt="${
+                                product.name || "Product"
+                            }"
+
+                            data-index="${index}"
+
+                        >
+
+                        `
+
+                    ).join("")}
+
+                </div>
+
+                `
+
+                :
+
+                ""
+
+            }
+
+
+        </div>
+
+
+
+        <div class="detail-info">
+
+
+            <p class="eyebrow">
+
+                ${
+                    product.category
+                    ||
+                    "COLLECTION"
+                }
+
+            </p>
+
+
+
+            <h1>
+
+                ${
+                    product.name
+                    ||
+                    "Unnamed Product"
+                }
+
+            </h1>
+
+
+
+            <div class="price">
+
+                ₹${product.price || 0}
+
+            </div>
+
+
+
+            <p class="description">
+
+                ${
+                    product.description
+                    ||
+                    ""
+                }
+
+            </p>
+
+
+
+            <p>
+
+                Product Code:
+
+                <strong>
+
+                    ${
+                        product.code
+                        ||
+                        "N/A"
+                    }
+
+                </strong>
+
+            </p>
+
+
+
+            <p>
+
+                Stock:
+
+                <strong>
+
+                    ${
+                        product.stock
+                        ||
+                        0
+                    }
+
+                </strong>
+
+            </p>
+
+
+
+            <br>
+
+
+
+            <a
+
+                href="${createWhatsAppLink(product)}"
+
+                target="_blank"
+
+                rel="noopener noreferrer"
+
+                class="primary-btn"
+
+            >
+
+                Order on WhatsApp
+
+            </a>
+
+
+        </div>
+
+    `;
+
+
+
+    setupGallery(product);
+
+}
+
+
+
+/* =========================================
+   GALLERY
+========================================= */
+
+
+function setupGallery(product) {
+
+
+    if (images.length === 0) {
+        return;
+    }
+
+
+    const mainImage =
+
+        document.getElementById(
+            "mainProductImage"
+        );
+
+
+    const counter =
+
+        document.getElementById(
+            "imageCounter"
+        );
+
+
+    const thumbnails =
+
+        document.querySelectorAll(
+            ".thumbnail"
+        );
+
+
+
+    /* =====================================
+       SHOW IMAGE
+    ===================================== */
+
+    function showImage(index) {
+
+        if (images.length === 0) {
+            return;
+        }
+
+
+        currentIndex =
+
+            (
+                index + images.length
+            )
+            %
+            images.length;
+
+
+
+        mainImage.style.opacity = "0";
+
+
+        setTimeout(() => {
+
+            mainImage.src =
+                images[currentIndex];
+
+            mainImage.style.opacity = "1";
+
+        }, 120);
+
+
+
+        /* Counter */
+
+        if (counter) {
+
+            counter.textContent =
+
+                `${currentIndex + 1} / ${images.length}`;
+
+        }
+
+
+
+        /* Active thumbnail */
+
+        thumbnails.forEach(
+            (thumbnail, index) => {
+
+                thumbnail.classList.toggle(
+
+                    "active",
+
+                    index === currentIndex
+
+                );
+
+            }
+        );
+
+
+        /* Scroll active thumbnail */
+
+        const activeThumbnail =
+
+            thumbnails[currentIndex];
+
+        if (activeThumbnail) {
+
+            activeThumbnail.scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "nearest",
+
+                inline: "center"
+
+            });
+
+        }
+
+    }
+
+
+
+    /* =====================================
+       NEXT
+    ===================================== */
+
+    const nextButton =
+
+        document.getElementById(
+            "galleryNext"
+        );
+
+
+    if (nextButton) {
+
+        nextButton.addEventListener(
+
+            "click",
+
+            function(event) {
+
+                event.stopPropagation();
+
+                showImage(
+                    currentIndex + 1
+                );
+
+            }
+
+        );
+
+    }
+
+
+
+    /* =====================================
+       PREVIOUS
+    ===================================== */
+
+    const prevButton =
+
+        document.getElementById(
+            "galleryPrev"
+        );
+
+
+    if (prevButton) {
+
+        prevButton.addEventListener(
+
+            "click",
+
+            function(event) {
+
+                event.stopPropagation();
+
+                showImage(
+                    currentIndex - 1
+                );
+
+            }
+
+        );
+
+    }
+
+
+
+    /* =====================================
+       THUMBNAILS
+    ===================================== */
+
+    thumbnails.forEach(
+
+        thumbnail => {
+
+            thumbnail.addEventListener(
+
+                "click",
+
+                function() {
+
+                    showImage(
+
+                        Number(
+                            this.dataset.index
+                        )
+
+                    );
+
+                }
+
+            );
+
+        }
+
+    );
+
+
+
+    /* =====================================
+       CLICK MAIN IMAGE → LIGHTBOX
+    ===================================== */
+
+    const mainWrapper =
+
+        document.getElementById(
+            "mainImageWrapper"
+        );
+
+
+    if (mainWrapper) {
+
+        mainWrapper.addEventListener(
+
+            "click",
+
+            function(event) {
+
+                if (
+                    event.target.closest(
+                        ".gallery-arrow"
+                    )
+                ) {
+                    return;
+                }
+
+
+                openLightbox();
+
+            }
+
+        );
+
+    }
+
+
+
+    /* =====================================
+       SWIPE SUPPORT
+    ===================================== */
+
+    let touchStartX = 0;
+
+    let touchEndX = 0;
+
+
+
+    mainWrapper.addEventListener(
+
+        "touchstart",
+
+        function(event) {
+
+            touchStartX =
+
+                event.changedTouches[0].screenX;
+
+        },
+
+        {
+            passive: true
+        }
+
+    );
+
+
+
+    mainWrapper.addEventListener(
+
+        "touchend",
+
+        function(event) {
+
+            touchEndX =
+
+                event.changedTouches[0].screenX;
+
+
+            const difference =
+
+                touchStartX - touchEndX;
+
+
+            if (Math.abs(difference) < 50) {
+                return;
+            }
+
+
+            if (difference > 0) {
+
+                showImage(
+                    currentIndex + 1
+                );
+
+            } else {
+
+                showImage(
+                    currentIndex - 1
+                );
+
+            }
+
+        },
+
+        {
+            passive: true
+        }
+
+    );
+
+
+
+    /* =====================================
+       LIGHTBOX
+    ===================================== */
+
+    const lightbox =
+
+        document.getElementById(
+            "imageLightbox"
+        );
+
+
+    const lightboxImage =
+
+        document.getElementById(
+            "lightboxImage"
+        );
+
+
+    const lightboxClose =
+
+        document.getElementById(
+            "lightboxClose"
+        );
+
+
+    const lightboxNext =
+
+        document.getElementById(
+            "lightboxNext"
+        );
+
+
+    const lightboxPrev =
+
+        document.getElementById(
+            "lightboxPrev"
+        );
+
+
+
+    function openLightbox() {
+
+        lightbox.classList.add(
+            "active"
+        );
+
+
+        lightboxImage.src =
+            images[currentIndex];
+
+
+        document.body.style.overflow =
+            "hidden";
+
+    }
+
+
+
+    function closeLightbox() {
+
+        lightbox.classList.remove(
+            "active"
+        );
+
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+
+
+    function showLightboxImage(index) {
+
+        currentIndex =
+
+            (
+                index + images.length
+            )
+            %
+            images.length;
+
+
+        lightboxImage.src =
+            images[currentIndex];
+
+
+        showImage(currentIndex);
+
+    }
+
+
+
+    if (lightboxClose) {
+
+        lightboxClose.addEventListener(
+
+            "click",
+
+            closeLightbox
+
+        );
+
+    }
+
+
+
+    if (lightboxNext) {
+
+        lightboxNext.addEventListener(
+
+            "click",
+
+            function() {
+
+                showLightboxImage(
+                    currentIndex + 1
+                );
+
+            }
+
+        );
+
+    }
+
+
+
+    if (lightboxPrev) {
+
+        lightboxPrev.addEventListener(
+
+            "click",
+
+            function() {
+
+                showLightboxImage(
+                    currentIndex - 1
+                );
+
+            }
+
+        );
+
+    }
+
+
+
+    /* Click outside image */
+
+    lightbox.addEventListener(
+
+        "click",
+
+        function(event) {
+
+            if (
+                event.target === lightbox
+            ) {
+
+                closeLightbox();
+
+            }
+
+        }
+
+    );
+
+
+
+    /* =====================================
+       KEYBOARD
+    ===================================== */
+
+    document.addEventListener(
+
+        "keydown",
+
+        function(event) {
+
+            if (
+                !lightbox.classList.contains(
+                    "active"
+                )
+            ) {
+                return;
+            }
+
+
+            if (
+                event.key === "ArrowRight"
+            ) {
+
+                showLightboxImage(
+                    currentIndex + 1
+                );
+
+            }
+
+
+            if (
+                event.key === "ArrowLeft"
+            ) {
+
+                showLightboxImage(
+                    currentIndex - 1
+                );
+
+            }
+
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeLightbox();
+
+            }
+
+        }
+
+    );
+
+
+
+    /* =====================================
+       LIGHTBOX SWIPE
+    ===================================== */
+
+    let lightboxTouchStart = 0;
+
+
+    lightbox.addEventListener(
+
+        "touchstart",
+
+        function(event) {
+
+            lightboxTouchStart =
+
+                event.changedTouches[0].screenX;
+
+        },
+
+        {
+            passive: true
+        }
+
+    );
+
+
+    lightbox.addEventListener(
+
+        "touchend",
+
+        function(event) {
+
+            const touchEnd =
+
+                event.changedTouches[0].screenX;
+
+
+            const difference =
+
+                lightboxTouchStart - touchEnd;
+
+
+            if (Math.abs(difference) < 50) {
+                return;
+            }
+
+
+            if (difference > 0) {
+
+                showLightboxImage(
+                    currentIndex + 1
+                );
+
+            } else {
+
+                showLightboxImage(
+                    currentIndex - 1
+                );
+
+            }
+
+        },
+
+        {
+            passive: true
+        }
+
+    );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+loadProduct();
+
+</script>
+
+</body>
+
+</html>

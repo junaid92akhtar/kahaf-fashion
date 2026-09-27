@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Shop — Kahaf Fashion</title>
+
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+>
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;1,500&display=swap"
+    rel="stylesheet"
+>
+
+<link
+    rel="stylesheet"
+    href="./css/style.css"
+>
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVBAR
+     ===================================================== -->
+
+<header class="navbar">
+
+<a
+    href="index.html"
+    class="logo"
+>
+    KAHAF <span>FASHION</span>
+</a>
+
+
+<!-- DESKTOP NAVIGATION -->
+
+<nav class="desktop-nav">
+
+    <a href="index.html">
+        Home
+    </a>
+
+    <a href="shop.html">
+        Shop
+    </a>
+
+    <a href="index.html#about">
+        About
+    </a>
+
+</nav>
+
+
+<!-- EXPLORE BUTTON -->
+
+<a
+    href="shop.html"
+    class="nav-btn"
+>
+    Explore
+</a>
+
+
+<!-- MOBILE MENU BUTTON -->
+
+<button
+    class="menu-toggle"
+    id="menuToggle"
+    aria-label="Open menu"
+    aria-expanded="false"
+>
+
+    <span></span>
+    <span></span>
+    <span></span>
+
+</button>
+
+</header>
+
+<!-- =====================================================
+     MOBILE MENU
+     ===================================================== -->
+
+<div
+    class="mobile-menu"
+    id="mobileMenu"
+>
+
+<a href="index.html">
+    Home
+</a>
+
+<a href="shop.html">
+    Shop
+</a>
+
+<a href="index.html#about">
+    About
+</a>
+
+<a
+    href="shop.html"
+    class="mobile-explore"
+>
+    Explore Collection →
+</a>
+
+</div>
+
+<!-- =====================================================
+     BACK BUTTON
+     ===================================================== -->
+
+<div class="back-button-wrapper">
+
+<button
+    class="back-button"
+    onclick="goBack()"
+>
+    ← Back
+</button>
+
+</div>
+
+<!-- =====================================================
+     SHOP
+     ===================================================== -->
+
+<main class="shop">
+
+<div class="shop-header">
+
+    <p class="eyebrow">
+        KAHAF FASHION
+    </p>
+
+    <h1>
+        Collection
+    </h1>
+
+    <p class="shop-intro">
+        Explore our carefully crafted collection
+        and discover pieces made to complement
+        your style.
+    </p>
+
+</div>
+
+
+<!-- PRODUCTS -->
+
+<div
+    class="product-grid"
+    id="productContainer"
+>
+
+    <p>
+        Loading products...
+    </p>
+
+</div>
+
+</main>
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<footer>
+
+
+<p>
+    © 2026 Kahaf Fashion
+</p>
+
+<p>
+    WhatsApp to order
+</p>
+
+</footer>
+
+<!-- =====================================================
+     BACK BUTTON SCRIPT
+     ===================================================== -->
+
+<script>
+
+    function goBack() {
+
+        if (window.history.length > 1) {
+
+            window.history.back();
+
+        } else {
+
+            window.location.href = "index.html";
+
+        }
+
+    }
+
+</script>
+
+<!-- =====================================================
+     MOBILE MENU SCRIPT
+     ===================================================== -->
+
+<script>
+
+    const menuToggle =
+        document.getElementById("menuToggle");
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+
+    menuToggle.addEventListener(
+        "click",
+        function () {
+
+            const isOpen =
+                mobileMenu.classList.toggle(
+                    "active"
+                );
+
+
+            menuToggle.classList.toggle(
+                "active",
+                isOpen
+            );
+
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                isOpen
+            );
+
+
+            menuToggle.setAttribute(
+                "aria-label",
+                isOpen
+                    ? "Close menu"
+                    : "Open menu"
+            );
+
+        }
+    );
+
+
+    const mobileLinks =
+        mobileMenu.querySelectorAll("a");
+
+
+    mobileLinks.forEach(
+        link => {
+
+            link.addEventListener(
+                "click",
+                function () {
+
+                    mobileMenu.classList.remove(
+                        "active"
+                    );
+
+
+                    menuToggle.classList.remove(
+                        "active"
+                    );
+
+
+                    menuToggle.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+
+                    menuToggle.setAttribute(
+                        "aria-label",
+                        "Open menu"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+<!-- =====================================================
+     FIREBASE PRODUCTS
+     ===================================================== -->
+
+<script
+    type="module"
+    src="./js/products.js"
+></script>
+
+</body>
+
+</html>

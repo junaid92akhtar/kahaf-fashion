@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+<link rel="icon" type="image/png" href="./images/icon.png">
+
+<title>Kahaf Fashion</title>
+
+
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+>
+
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+    crossorigin
+>
+
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap"
+    rel="stylesheet"
+>
+
+
+<link
+    rel="stylesheet"
+    href="./css/style.css"
+>
+
+
+<style>
+
+    /* =====================================
+       ABOUT SECTION
+    ===================================== */
+
+    .about-section {
+
+        padding: 110px 7%;
+
+        display: grid;
+
+        grid-template-columns:
+            1.3fr 0.7fr;
+
+        gap: 70px;
+
+        align-items: center;
+
+        background: #f8f6f3;
+    }
+
+
+    .about-content {
+
+        max-width: 750px;
+    }
+
+
+    .about-content h2 {
+
+        font-family:
+            "Playfair Display",
+            serif;
+
+        font-size:
+            clamp(42px, 5vw, 68px);
+
+        line-height: 1.05;
+
+        margin:
+            15px 0 25px;
+
+        color: #111;
+    }
+
+
+    .about-content h2 span {
+
+        display: block;
+
+        font-style: italic;
+
+        font-weight: 500;
+    }
+
+
+    .about-text {
+
+        max-width: 680px;
+
+        font-size: 16px;
+
+        line-height: 1.8;
+
+        color: #666;
+
+        margin-bottom: 18px;
+    }
+
+
+    .about-text strong {
+
+        color: #222;
+
+        font-weight: 600;
+    }
+
+
+    /* CUSTOM WORK */
+
+    .custom-features {
+
+        display: flex;
+
+        flex-wrap: wrap;
+
+        gap: 10px;
+
+        margin:
+            30px 0 38px;
+    }
+
+
+    .custom-feature {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        padding:
+            10px 15px;
+
+        background: white;
+
+        border:
+            1px solid #e4e0db;
+
+        border-radius: 30px;
+    }
+
+
+    .custom-feature span {
+
+        font-size: 10px;
+
+        color: #999;
+
+        letter-spacing: 1px;
+    }
+
+
+    .custom-feature p {
+
+        margin: 0;
+
+        font-size: 13px;
+
+        font-weight: 600;
+
+        color: #222;
+    }
+
+
+    /* WHATSAPP */
+
+    .about-action {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 20px;
+
+        flex-wrap: wrap;
+    }
+
+
+    .about-action-text {
+
+        margin: 0;
+
+        color: #555;
+
+        font-size: 14px;
+    }
+
+
+    /* VISUAL CARD */
+
+    .about-visual {
+
+        display: flex;
+
+        justify-content: center;
+    }
+
+
+    .about-card {
+
+        width: 100%;
+
+        max-width: 350px;
+
+        min-height: 430px;
+
+        padding: 45px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: flex-end;
+
+        background:
+            linear-gradient(
+                145deg,
+                #252525,
+                #080808
+            );
+
+        color: white;
+
+        position: relative;
+
+        overflow: hidden;
+
+        border-radius: 5px;
+
+        box-shadow:
+            0 25px 60px
+            rgba(0,0,0,0.15);
+    }
+
+
+    .about-card::before {
+
+        content: "";
+
+        position: absolute;
+
+        width: 240px;
+
+        height: 240px;
+
+        border:
+            1px solid
+            rgba(255,255,255,0.15);
+
+        border-radius: 50%;
+
+        top: -100px;
+
+        right: -80px;
+    }
+
+
+    .about-card::after {
+
+        content: "";
+
+        position: absolute;
+
+        width: 150px;
+
+        height: 150px;
+
+        border:
+            1px solid
+            rgba(255,255,255,0.10);
+
+        border-radius: 50%;
+
+        top: -45px;
+
+        right: -10px;
+    }
+
+
+    .about-card-small {
+
+        position: absolute;
+
+        top: 40px;
+
+        left: 45px;
+
+        font-size: 11px;
+
+        letter-spacing: 5px;
+
+        color: #aaa;
+    }
+
+
+    .about-card h3 {
+
+        position: relative;
+
+        z-index: 2;
+
+        font-family:
+            "Playfair Display",
+            serif;
+
+        font-size: 46px;
+
+        line-height: 1.05;
+
+        font-weight: 500;
+
+        margin:
+            0 0 18px;
+    }
+
+
+    .about-card-description {
+
+        position: relative;
+
+        z-index: 2;
+
+        color: #aaa;
+
+        line-height: 1.6;
+
+        font-size: 14px;
+
+        max-width: 220px;
+
+        margin: 0;
+    }
+
+
+    /* =====================================
+       MOBILE
+    ===================================== */
+
+    @media (max-width: 800px) {
+
+        .about-section {
+
+            grid-template-columns: 1fr;
+
+            gap: 50px;
+
+            padding:
+                75px 6%;
+        }
+
+
+        .about-content h2 {
+
+            font-size: 46px;
+        }
+
+
+        .about-action {
+
+            flex-direction: column;
+
+            align-items: flex-start;
+        }
+
+
+        .about-visual {
+
+            justify-content:
+                flex-start;
+        }
+
+
+        .about-card {
+
+            max-width: 100%;
+
+            min-height: 350px;
+        }
+
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+<!-- =====================================
+     NAVBAR
+===================================== -->
+
+<header class="navbar">
+
+    <a href="index.html" class="logo">
+        KAHAF <span>FASHION</span>
+    </a>
+
+
+    <!-- DESKTOP NAVIGATION -->
+
+    <nav class="desktop-nav">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="shop.html">
+            Shop
+        </a>
+
+        <a href="index.html#about">
+            About
+        </a>
+
+        <a href="admin.html">
+            Admin
+        </a>
+
+    </nav>
+
+
+    <a
+        href="shop.html"
+        class="nav-btn"
+    >
+        Explore
+    </a>
+
+
+    <!-- MOBILE MENU BUTTON -->
+
+    <button
+        class="menu-toggle"
+        id="menuToggle"
+        aria-label="Open menu"
+        aria-expanded="false"
+    >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </button>
+
+</header>
+
+
+<!-- MOBILE NAVIGATION -->
+
+<div
+    class="mobile-menu"
+    id="mobileMenu"
+>
+
+    <a href="index.html">
+        Home
+    </a>
+
+    <a href="shop.html">
+        Shop
+    </a>
+
+    <a href="index.html#about">
+        About
+    </a>
+
+    <a href="admin.html">
+        Admin
+    </a>
+
+    <a
+        href="shop.html"
+        class="mobile-explore"
+    >
+        Explore Collection →
+    </a>
+
+</div>
+
+<!-- =====================================
+     HERO
+===================================== -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+
+    <p class="eyebrow">
+        KAHAF FASHION
+    </p>
+
+
+    <h1>
+
+        Style
+
+        <span>
+            Beyond Ordinary.
+        </span>
+
+    </h1>
+
+
+    <p class="hero-text">
+
+        Discover carefully selected
+        fashion pieces designed for
+        modern style, confidence and
+        everyday elegance.
+
+    </p>
+
+
+    <div class="hero-buttons">
+
+
+        <a
+            href="shop.html"
+            class="primary-btn"
+        >
+            Explore Collection
+        </a>
+
+
+        <a
+            href="#featured"
+            class="secondary-btn"
+        >
+            Discover
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<div class="hero-visual">
+
+    <img
+        src="./images/home page photo.png.jpg"
+        alt="Kahaf Fashion"
+        class="hero-image"
+    >
+
+</div>
+
+</section>
+
+<!-- =====================================
+     FEATURED COLLECTION
+===================================== -->
+
+<section
+    class="featured"
+    id="featured"
+>
+
+<div class="section-heading">
+
+
+    <p>
+        SELECTED PIECES
+    </p>
+
+
+    <h2>
+        Featured Collection
+    </h2>
+
+
+</div>
+
+
+
+<div
+    class="products-preview"
+    id="productContainer"
+>
+
+    <p>
+        Loading products...
+    </p>
+
+</div>
+
+</section>
+
+<!-- =====================================
+     ABOUT US / CUSTOMIZATION
+===================================== -->
+
+<section
+    class="about-section"
+    id="about"
+>
+
+<div class="about-content">
+
+
+    <p class="eyebrow">
+        ABOUT KAHAF FASHION
+    </p>
+
+
+    <h2>
+
+        Your Idea.
+
+        <span>
+            Our Craft.
+        </span>
+
+    </h2>
+
+
+    <p class="about-text">
+
+        At <strong>Kahaf Fashion</strong>,
+        we believe every outfit should be
+        unique and made according to your
+        choice.
+
+    </p>
+
+
+    <p class="about-text">
+
+        We create beautiful
+        <strong>
+            zari work, handwork, neckline
+            designs, sleeve work, borders
+            and other decorative details
+        </strong>
+        according to your requirements.
+
+        We can also customize your cloth
+        based on your own design or idea.
+
+    </p>
+
+
+    <p class="about-text">
+
+        Have something special in mind? ✨
+
+        Share your idea, design or
+        requirements with us, and let's
+        discuss how we can create it for you.
+
+    </p>
+
+
+
+    <div class="custom-features">
+
+
+        <div class="custom-feature">
+
+            <span>01</span>
+
+            <p>
+                Zari Work
+            </p>
+
+        </div>
+
+
+        <div class="custom-feature">
+
+            <span>02</span>
+
+            <p>
+                Hand Work
+            </p>
+
+        </div>
+
+
+        <div class="custom-feature">
+
+            <span>03</span>
+
+            <p>
+                Neckline Design
+            </p>
+
+        </div>
+
+
+        <div class="custom-feature">
+
+            <span>04</span>
+
+            <p>
+                Sleeve Work
+            </p>
+
+        </div>
+
+
+        <div class="custom-feature">
+
+            <span>05</span>
+
+            <p>
+                Custom Designs
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="about-action">
+
+
+        <p class="about-action-text">
+
+            Want to customize your cloth?
+
+        </p>
+
+
+        <a
+            href="https://wa.me/919867495547?text=Hello%20Kahaf%20Fashion!%20%F0%9F%91%8B%0A%0AI%20am%20interested%20in%20customizing%20my%20cloth.%0A%0AI%20would%20like%20to%20discuss%20my%20design%20or%20requirements%20with%20you.%0A%0APlease%20guide%20me%20about%20the%20available%20customization%20options%20and%20pricing.%0A%0AThank%20you!"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="primary-btn"
+        >
+
+            💬 Discuss Your Custom Design
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+
+<div class="about-visual">
+
+    <div class="about-photo">
+
+        <img
+            src="./images/about img.jpg"
+            alt="Kahaf Fashion Custom Craftsmanship"
+        >
+
+        <div class="about-photo-overlay">
+
+            <p>
+                KAHAF FASHION
+            </p>
+
+            <h3>
+                Crafted<br>
+                For You.
+            </h3>
+
+            <span>
+                Custom craftsmanship
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+</section>
+
+
+
+<!-- =====================================
+     PREMIUM FOOTER
+===================================== -->
+
+<footer class="premium-footer">
+
+    <div class="footer-main">
+
+        <!-- BRAND -->
+
+        <div class="footer-brand">
+
+            <a
+                href="index.html"
+                class="footer-logo"
+            >
+                KAHAF
+                <span>FASHION</span>
+            </a>
+
+            <p class="footer-tagline">
+                Style beyond ordinary.
+            </p>
+
+            <p class="footer-description">
+                Discover refined embroidery, zari work and bespoke embellishments created to transform every outfit into something extraordinary.
+            </p>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+
+        <div class="footer-column">
+
+            <h4>
+                Explore
+            </h4>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="shop.html">
+                Collection
+            </a>
+
+            <a href="index.html#about">
+                About Us
+            </a>
+
+            <a href="admin.html">
+                Admin
+            </a>
+
+        </div>
+
+
+        <!-- SERVICES -->
+
+        <div class="footer-column">
+
+            <h4>
+                Our Craft
+            </h4>
+
+            <a href="index.html#about">
+                Zari Work
+            </a>
+
+            <a href="index.html#about">
+                Hand Work
+            </a>
+
+            <a href="index.html#about">
+                Neckline Design
+            </a>
+
+            <a href="index.html#about">
+                Custom Designs
+            </a>
+
+        </div>
+
+
+        <!-- CONTACT -->
+
+        <div class="footer-column footer-contact">
+
+            <h4>
+                Connect
+            </h4>
+
+            <a href="mailto:kahaffashion657@gmail.com">
+                kahaffashion657@gmail.com
+            </a>
+
+            <a
+                href="https://wa.me/919867495547"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                WhatsApp
+            </a>
+
+            <div class="footer-socials">
+
+                <a
+                    href="https://www.instagram.com/monazir.rizvi?utm_source=qr&stkn=MXJrM3BjbGl6czdreQ=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                >
+                    Instagram
+                </a>
+
+                <a
+                    href="https://pin.it/RrcDKOFOA"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Pinterest"
+                >
+                    Pinterest
+                </a>
+
+                <a
+                    href="https://www.facebook.com/share/1C4cy6o7EE/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook"
+                >
+                    Facebook
+                </a>
+
+                <a
+                    href="https://youtube.com/@msmonazirrizvi4439?si=Qys-rmVoygRW1NUa"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="YouTube"
+                >
+                    YouTube
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER LINE -->
+
+    <div class="footer-line"></div>
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 Kahaf Fashion.
+            All rights reserved.
+        </p>
+
+        <p class="footer-made">
+    Crafted with care by
+    <a
+        href="https://github.com/junaid92akhtar"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        Junaid Akhtar
+    </a>
+</p>
+
+        <a href="#top" class="back-top">
+            Back to top ↑
+        </a>
+
+    </div>
+
+</footer>
+
+
+<script
+    type="module"
+    src="./js/products.js"
+></script>
+
+<script>
+
+const menuToggle =
+    document.getElementById("menuToggle");
+
+const mobileMenu =
+    document.getElementById("mobileMenu");
+
+
+menuToggle.addEventListener(
+    "click",
+    function () {
+
+        const isOpen =
+            mobileMenu.classList.toggle("active");
+
+        menuToggle.classList.toggle(
+            "active",
+            isOpen
+        );
+
+        menuToggle.setAttribute(
+            "aria-expanded",
+            isOpen
+        );
+
+        menuToggle.setAttribute(
+            "aria-label",
+            isOpen
+                ? "Close menu"
+                : "Open menu"
+        );
+
+    }
+);
+
+
+/* CLOSE MENU AFTER CLICKING LINK */
+
+const mobileLinks =
+    mobileMenu.querySelectorAll("a");
+
+
+mobileLinks.forEach(
+    link => {
+
+        link.addEventListener(
+            "click",
+            function () {
+
+                mobileMenu.classList.remove(
+                    "active"
+                );
+
+                menuToggle.classList.remove(
+                    "active"
+                );
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+                menuToggle.setAttribute(
+                    "aria-label",
+                    "Open menu"
+                );
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

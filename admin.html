@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Kahaf Fashion — Admin Panel</title>
+
+    <meta
+        name="description"
+        content="Kahaf Fashion Admin Panel"
+    >
+
+    <link
+        rel="stylesheet"
+        href="./css/style.css"
+    >
+
+    <style>
+
+        /* =========================================
+           ADMIN PAGE
+        ========================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                #f7f5f2;
+
+            color: #222;
+        }
+
+
+        /* =========================================
+           LOGIN
+        ========================================= */
+
+        #loginSection {
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8f4ef,
+                    #eee8df
+                );
+        }
+
+
+        .login-card {
+
+            width: 100%;
+
+            max-width: 430px;
+
+            background: #ffffff;
+
+            padding: 42px 35px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.10);
+
+            border:
+                1px solid #eee;
+
+        }
+
+
+        .brand {
+
+            text-align: center;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .brand h1 {
+
+            font-family:
+                Georgia,
+                serif;
+
+            font-size: 34px;
+
+            letter-spacing: 2px;
+
+            color: #171717;
+
+        }
+
+
+        .brand p {
+
+            margin-top: 8px;
+
+            color: #777;
+
+            font-size: 13px;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .login-title {
+
+            font-size: 22px;
+
+            margin-bottom: 22px;
+
+            text-align: center;
+
+        }
+
+
+        .input-group {
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .input-group label {
+
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            margin-bottom: 8px;
+
+            color: #444;
+
+        }
+
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+
+            width: 100%;
+
+            border: 1px solid #ddd;
+
+            border-radius: 10px;
+
+            padding: 13px 14px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            background: #fff;
+
+            transition: 0.2s;
+
+        }
+
+
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
+
+            border-color: #222;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(0, 0, 0, 0.05);
+
+        }
+
+
+        #loginButton {
+
+            width: 100%;
+
+            border: none;
+
+            padding: 14px;
+
+            border-radius: 10px;
+
+            background: #171717;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        #loginButton:hover {
+
+            background: #333;
+
+        }
+
+
+        #loginButton:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+        }
+
+
+        #loginError {
+
+            margin-top: 15px;
+
+            text-align: center;
+
+            color: #c62828;
+
+            font-size: 13px;
+
+            min-height: 18px;
+
+        }
+
+
+        /* =========================================
+           ADMIN PANEL
+        ========================================= */
+
+        #adminPanel {
+
+            display: none;
+
+            min-height: 100vh;
+
+        }
+
+
+        .admin-header {
+
+            background: #171717;
+
+            color: white;
+
+            padding: 18px 30px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+        }
+
+
+        .admin-brand {
+
+            font-family:
+                Georgia,
+                serif;
+
+            font-size: 24px;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .admin-header-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+        }
+
+
+        .admin-label {
+
+            font-size: 12px;
+
+            color: #ccc;
+
+        }
+
+
+        #logoutButton {
+
+            border: 1px solid #555;
+
+            background: transparent;
+
+            color: white;
+
+            padding: 9px 16px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        #logoutButton:hover {
+
+            background: white;
+
+            color: #171717;
+
+        }
+
+
+        /* =========================================
+           CONTAINER
+        ========================================= */
+
+        .admin-container {
+
+            width: 100%;
+
+            max-width: 1250px;
+
+            margin: auto;
+
+            padding: 35px 20px 70px;
+
+        }
+
+
+        .page-heading {
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .page-heading h2 {
+
+            font-family:
+                Georgia,
+                serif;
+
+            font-size: 32px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .page-heading p {
+
+            color: #777;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =========================================
+           ADD PRODUCT CARD
+        ========================================= */
+
+        .admin-card {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            margin-bottom: 35px;
+
+            border: 1px solid #e8e5e1;
+
+            box-shadow:
+                0 10px 35px
+                rgba(0, 0, 0, 0.05);
+
+        }
+
+
+        .card-title {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+
+            padding-bottom: 15px;
+
+            border-bottom:
+                1px solid #eee;
+
+        }
+
+
+        .card-title h3 {
+
+            font-size: 20px;
+
+        }
+
+
+        .card-title span {
+
+            font-size: 12px;
+
+            color: #888;
+
+        }
+
+
+        /* =========================================
+           FORM GRID
+        ========================================= */
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+
+        }
+
+
+        .full-width {
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        .input-group textarea {
+
+            resize: vertical;
+
+            min-height: 110px;
+
+            font-family: inherit;
+
+        }
+
+
+        /* =========================================
+           IMAGE LINKS
+        ========================================= */
+
+        .image-help {
+
+            margin-top: 7px;
+
+            color: #888;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+
+        }
+
+
+        .image-example {
+
+            background: #f7f7f7;
+
+            border: 1px dashed #ccc;
+
+            padding: 10px;
+
+            margin-top: 10px;
+
+            border-radius: 8px;
+
+            font-size: 11px;
+
+            color: #666;
+
+            word-break: break-all;
+
+        }
+
+
+        #imagePreview {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fill,
+                    minmax(110px, 1fr)
+                );
+
+            gap: 12px;
+
+            margin-top: 18px;
+
+        }
+
+
+        #imagePreview img {
+
+            width: 100%;
+
+            height: 130px;
+
+            object-fit: cover;
+
+            border-radius: 10px;
+
+            border:
+                1px solid #ddd;
+
+            background: #f5f5f5;
+
+        }
+
+
+        /* =========================================
+           ADD BUTTON
+        ========================================= */
+
+        .submit-area {
+
+            margin-top: 25px;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+        }
+
+
+        .add-product-btn {
+
+            border: none;
+
+            background: #171717;
+
+            color: white;
+
+            padding: 14px 28px;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .add-product-btn:hover {
+
+            background: #333;
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        .add-product-btn:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+        }
+
+
+        /* =========================================
+           PRODUCTS
+        ========================================= */
+
+        #productList {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+        }
+
+
+        .admin-product {
+
+            background: white;
+
+            border:
+                1px solid #e8e5e1;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0, 0, 0, 0.05);
+
+            transition: 0.2s;
+
+        }
+
+
+        .admin-product:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 12px 30px
+                rgba(0, 0, 0, 0.08);
+
+        }
+
+
+        .admin-product-image {
+
+            width: 100%;
+
+            height: 230px;
+
+            background: #f1f1f1;
+
+            overflow: hidden;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #999;
+
+            font-size: 13px;
+
+        }
+
+
+        .admin-product-image img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+        }
+
+
+        .admin-product-info {
+
+            padding: 18px;
+
+        }
+
+
+        .admin-product-info h3 {
+
+            font-family:
+                Georgia,
+                serif;
+
+            font-size: 18px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .admin-product-info p {
+
+            color: #666;
+
+            font-size: 13px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .delete-product-btn {
+
+            width: 100%;
+
+            margin-top: 15px;
+
+            padding: 10px;
+
+            border:
+                1px solid #d32f2f;
+
+            background: transparent;
+
+            color: #d32f2f;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+
+        }
+
+
+        .delete-product-btn:hover {
+
+            background: #d32f2f;
+
+            color: white;
+
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 950px) {
+
+            #productList {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .admin-header {
+
+                padding: 15px 18px;
+
+            }
+
+
+            .admin-brand {
+
+                font-size: 20px;
+
+            }
+
+
+            .admin-label {
+
+                display: none;
+
+            }
+
+
+            .admin-container {
+
+                padding:
+                    25px 15px 50px;
+
+            }
+
+
+            .admin-card {
+
+                padding: 20px;
+
+                border-radius: 14px;
+
+            }
+
+
+            .page-heading h2 {
+
+                font-size: 27px;
+
+            }
+
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+
+                gap: 0;
+
+            }
+
+
+            .full-width {
+
+                grid-column: auto;
+
+            }
+
+
+            #productList {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .submit-area {
+
+                justify-content: stretch;
+
+            }
+
+
+            .add-product-btn {
+
+                width: 100%;
+
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .login-card {
+
+                padding:
+                    30px 22px;
+
+            }
+
+
+            .brand h1 {
+
+                font-size: 29px;
+
+            }
+
+
+            .admin-header-right {
+
+                gap: 8px;
+
+            }
+
+
+            #logoutButton {
+
+                padding:
+                    8px 11px;
+
+                font-size: 12px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<div class="back-button-wrapper">
+    <button
+        class="back-button"
+        onclick="goBack()"
+    >
+        ← Back
+    </button>
+</div>
+
+<script>
+    function goBack() {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.href = "index.html";
+        }
+    }
+</script>
+
+
+<body>
+
+
+<!-- =========================================
+     LOGIN SECTION
+========================================= -->
+
+<section id="loginSection">
+
+    <div class="login-card">
+
+        <div class="brand">
+
+            <h1>Kahaf Fashion</h1>
+
+            <p>ADMINISTRATION PANEL</p>
+
+        </div>
+
+
+        <h2 class="login-title">
+            Admin Login
+        </h2>
+
+
+        <form id="loginForm">
+
+            <div class="input-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter admin email"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                id="loginButton"
+            >
+                Login
+            </button>
+
+
+            <p id="loginError"></p>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     ADMIN PANEL
+========================================= -->
+
+<section id="adminPanel">
+
+
+    <!-- HEADER -->
+
+    <header class="admin-header">
+
+        <div class="admin-brand">
+            Kahaf Fashion
+        </div>
+
+
+        <div class="admin-header-right">
+
+            <span class="admin-label">
+                Administrator
+            </span>
+
+            <button
+                id="logoutButton"
+                type="button"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- MAIN -->
+
+    <main class="admin-container">
+
+
+        <!-- PAGE HEADING -->
+
+        <div class="page-heading">
+
+            <h2>
+                Store Management
+            </h2>
+
+            <p>
+                Add and manage products for your Kahaf Fashion store.
+            </p>
+
+        </div>
+
+
+
+        <!-- =====================================
+             ADD PRODUCT
+        ====================================== -->
+
+        <div class="admin-card">
+
+            <div class="card-title">
+
+                <h3>
+                    Add New Product
+                </h3>
+
+                <span>
+                    Product Information
+                </span>
+
+            </div>
+
+
+            <form id="productForm">
+
+
+                <div class="form-grid">
+
+
+                    <!-- PRODUCT NAME -->
+
+                    <div class="input-group">
+
+                        <label for="name">
+                            Product Name *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="e.g. Royal Zari Dupatta"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- PRICE -->
+
+                    <div class="input-group">
+
+                        <label for="price">
+                            Price (₹) *
+                        </label>
+
+                        <input
+                            type="number"
+                            id="price"
+                            placeholder="e.g. 1499"
+                            min="0"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="input-group">
+
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <select id="category">
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+                            <option value="Embroidery">
+                                Embroidery
+                            </option>
+
+                            <option value="Zari Work">
+                                Zari Work
+                            </option>
+
+                            <option value="Stone Work">
+                                Stone Work
+                            </option>
+
+                            <option value="Pearl Work">
+                                Pearl Work
+                            </option>
+
+                            <option value="Sequin Work">
+                                Sequin Work
+                            </option>
+
+                            <option value="Thread Work">
+                                Thread Work
+                            </option>
+
+                            <option value="Handwork">
+                                Handwork
+                            </option>
+
+                            <option value="Lace & Border Work">
+                                Lace & Border Work
+                            </option>
+
+                            <option value="Bridal Collection">
+                                Bridal Collection
+                            </option>
+
+                            <option value="Party Wear">
+                                Party Wear
+                            </option>
+
+                            <option value="Custom Designs">
+                                Custom Designs
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- PRODUCT CODE -->
+
+                    <div class="input-group">
+
+                        <label for="code">
+                            Product Code
+                        </label>
+
+                        <input
+                            type="text"
+                            id="code"
+                            placeholder="e.g. KF-ZR-001"
+                        >
+
+                    </div>
+
+
+
+                    <!-- STOCK -->
+
+                    <div class="input-group">
+
+                        <label for="stock">
+                            Stock Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            id="stock"
+                            placeholder="e.g. 10"
+                            min="0"
+                            value="0"
+                        >
+
+                    </div>
+
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="input-group full-width">
+
+                        <label for="description">
+                            Product Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            placeholder="Write a short description about this product..."
+                        ></textarea>
+
+                    </div>
+
+
+
+                    <!-- IMAGE LINKS -->
+
+                    <div class="input-group full-width">
+
+                        <label for="imageLinks">
+                            Product Image Links *
+                        </label>
+
+                        <textarea
+                            id="imageLinks"
+                            placeholder="Paste image URL here&#10;Paste another image URL on the next line&#10;Paste another image URL on the next line"
+                            rows="6"
+                            required
+                        ></textarea>
+
+
+                        <p class="image-help">
+
+                            💡 Add one image link per line.
+                            You can add multiple images for the same product.
+
+                        </p>
+
+
+                        <div class="image-example">
+
+                            Example:<br>
+
+                            https://example.com/front.jpg<br>
+
+                            https://example.com/back.jpg<br>
+
+                            https://example.com/detail.jpg
+
+                        </div>
+
+
+                        <!-- IMAGE PREVIEW -->
+
+                        <div id="imagePreview"></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SUBMIT -->
+
+                <div class="submit-area">
+
+                    <button
+                        type="submit"
+                        class="add-product-btn"
+                    >
+                        Add Product
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        <!-- =====================================
+             PRODUCT MANAGEMENT
+        ====================================== -->
+
+        <div class="admin-card">
+
+            <div class="card-title">
+
+                <h3>
+                    Your Products
+                </h3>
+
+                <span>
+                    Manage Store
+                </span>
+
+            </div>
+
+
+            <div id="productList">
+
+                <p>
+                    Loading products...
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+</section>
+
+
+
+<!-- =========================================  
+     FIREBASE / ADMIN JS
+========================================= -->
+
+<script
+    type="module"
+    src="./js/admin.js"
+></script>
+
+
+</body>
+
+</html>

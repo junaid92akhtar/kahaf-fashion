@@ -339,41 +339,7 @@ function showImagePreview(value) {
     );
 
 }
-function showImagePreview(value) {
 
-
-if (!imagePreview) return;
-
-const links =
-    value
-        .split("\n")
-        .map(link => link.trim())
-        .filter(link => link !== "");
-
-imagePreview.innerHTML = "";
-
-links.forEach(link => {
-
-    const img =
-        document.createElement("img");
-
-    img.src = link;
-
-    img.style.width = "100px";
-    img.style.height = "100px";
-    img.style.objectFit = "cover";
-    img.style.borderRadius = "8px";
-    img.style.margin = "5px";
-
-    img.onerror = function () {
-        img.style.opacity = "0.3";
-    };
-
-    imagePreview.appendChild(img);
-
-});
-
-}
 
 /* =====================================
 LOGIN

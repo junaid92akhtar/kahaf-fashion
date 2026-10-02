@@ -5,35 +5,55 @@ import {
     getDoc
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-import { db } from "./firebase.js";
+import {
+    db
+} from "./firebase.js";
 
 
-// ==========================================
-// GET ALL PRODUCTS
-// ==========================================
+/* ==========================================
+   GET ALL PRODUCTS
+========================================== */
 
 export async function getProducts() {
 
     try {
 
-        const snapshot = await getDocs(
-            collection(db, "products")
-        );
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "products"
+                )
+            );
+
 
         const products = [];
 
-        snapshot.forEach((documentSnapshot) => {
 
-            products.push({
-                id: documentSnapshot.id,
-                ...documentSnapshot.data()
-            });
+        snapshot.forEach(
+            function (documentSnapshot) {
 
-        });
+                products.push({
 
-        console.log("Products loaded:", products);
+                    id:
+                        documentSnapshot.id,
+
+                    ...documentSnapshot.data()
+
+                });
+
+            }
+        );
+
+
+        console.log(
+            "Products loaded:",
+            products
+        );
+
 
         return products;
+
 
     } catch (error) {
 
@@ -42,38 +62,56 @@ export async function getProducts() {
             error
         );
 
+
         return [];
 
     }
+
 }
 
 
-// ==========================================
-// GET SINGLE PRODUCT
-// ==========================================
+/* ==========================================
+   GET SINGLE PRODUCT
+========================================== */
 
-export async function getProduct(productId) {
+export async function getProduct(
+    productId
+) {
 
     try {
 
-        const productRef = doc(
-            db,
-            "products",
-            productId
-        );
+        const productRef =
+            doc(
+                db,
+                "products",
+                productId
+            );
 
-        const snapshot = await getDoc(productRef);
 
-        if (snapshot.exists()) {
+        const snapshot =
+            await getDoc(
+                productRef
+            );
+
+
+        if (
+            snapshot.exists()
+        ) {
 
             return {
-                id: snapshot.id,
+
+                id:
+                    snapshot.id,
+
                 ...snapshot.data()
+
             };
 
         }
 
+
         return null;
+
 
     } catch (error) {
 
@@ -82,6 +120,7 @@ export async function getProduct(productId) {
             error
         );
 
+
         return null;
 
     }
@@ -89,91 +128,284 @@ export async function getProduct(productId) {
 }
 
 
-// ==========================================
-// GET PRODUCT IMAGES
-// ==========================================
+/* ==========================================
+   IMAGE URL
+========================================== */
 
-export function getProductImages(product) {
+export function convertProductImageURL(
+    link
+) {
 
     if (
-        Array.isArray(product.images) &&
-        product.images.length > 0
+        typeof link !== "string"
     ) {
 
-        return product.images
-            .filter(
-                image =>
-                    typeof image === "string" &&
-                    image.trim() !== ""
-            )
-            .map(
-                image => image.trim()
-            );
+        return "";
 
     }
 
 
-    // Old image field support
+    link =
+        link.trim();
+
+
+    if (!link) {
+        return "";
+    }
+
+
+    /* =================================
+       GOOGLE PHOTOS
+       
+       These are NOT direct image URLs.
+    ================================= */
 
     if (
-        typeof product.image === "string" &&
-        product.image.trim() !== ""
+        link.includes(
+            "photos.app.goo.gl"
+        ) ||
+        link.includes(
+            "photos.google.com"
+        )
     ) {
 
-        return [
-            product.image.trim()
+        return "";
+
+    }
+
+
+    /* =================================
+       FACEBOOK / INSTAGRAM
+    ================================= */
+
+    if (
+        link.includes(
+            "fbcdn.net"
+        ) ||
+        link.includes(
+            "facebook.com"
+        ) ||
+        link.includes(
+            "instagram.com"
+        )
+    ) {
+
+        return "";
+
+    }
+
+
+    /* =================================
+       GOOGLE DRIVE
+    ================================= */
+
+    const driveFileMatch =
+        link.match(
+            /drive\.google\.com\/file\/d\/([^/]+)/
+        );
+
+
+    if (driveFileMatch) {
+
+        const fileId =
+            driveFileMatch[1];
+
+
+        return (
+            "https://drive.google.com/thumbnail" +
+            "?id=" +
+            encodeURIComponent(
+                fileId
+            ) +
+            "&sz=w1600"
+        );
+
+    }
+
+
+    /* =================================
+       GOOGLE DRIVE OPEN LINK
+    ================================= */
+
+    const driveOpenMatch =
+        link.match(
+            /drive\.google\.com\/open\?id=([^&]+)/
+        );
+
+
+    if (driveOpenMatch) {
+
+        const fileId =
+            driveOpenMatch[1];
+
+
+        return (
+            "https://drive.google.com/thumbnail" +
+            "?id=" +
+            encodeURIComponent(
+                fileId
+            ) +
+            "&sz=w1600"
+        );
+
+    }
+
+
+    /* =================================
+       GOOGLE DRIVE THUMBNAIL
+    ================================= */
+
+    if (
+        link.includes(
+            "drive.google.com/thumbnail"
+        )
+    ) {
+
+        return link;
+
+    }
+
+
+    /* =================================
+       GOOGLE USERCONTENT
+       
+       Only allow lh3.
+    ================================= */
+
+    if (
+        link.includes(
+            "lh3.googleusercontent.com"
+        )
+    ) {
+
+        return link;
+
+    }
+
+
+    /* =================================
+       NORMAL IMAGE URL
+    ================================= */
+
+    return link;
+
+}
+
+
+/* ==========================================
+   GET PRODUCT IMAGES
+========================================== */
+
+export function getProductImages(
+    product
+) {
+
+    let images = [];
+
+
+    /* New images array */
+
+    if (
+        Array.isArray(
+            product.images
+        )
+    ) {
+
+        images =
+            product.images;
+
+    }
+
+
+    /* Old image field */
+
+    else if (
+        typeof product.image ===
+        "string"
+    ) {
+
+        images = [
+            product.image
         ];
 
     }
 
 
-    return [];
+    return images
+
+        .filter(
+            image =>
+                typeof image ===
+                "string" &&
+                image.trim() !== ""
+        )
+
+        .map(
+            image =>
+                convertProductImageURL(
+                    image
+                )
+        )
+
+        .filter(
+            image =>
+                image !== ""
+        );
 
 }
 
 
-// ==========================================
-// WHATSAPP
-// ==========================================
+/* ==========================================
+   WHATSAPP
+========================================== */
 
-export function createWhatsAppLink(product) {
+export function createWhatsAppLink(
+    product
+) {
 
     const phoneNumber =
         "919867495547";
 
 
     const message =
-        `Hello Kahaf Fashion,%0A%0A` +
-        `I am interested in this product:%0A` +
-        `Product: ${encodeURIComponent(
-            product.name || ""
-        )}%0A` +
-        `Price: ₹${encodeURIComponent(
-            product.price || ""
-        )}%0A` +
-        `Category: ${encodeURIComponent(
-            product.category || "N/A"
-        )}%0A` +
-        `Code: ${encodeURIComponent(
-            product.code || "N/A"
-        )}`;
+        [
+            "Hello Kahaf Fashion,",
+            "",
+            "I am interested in this product:",
+            "",
+            `Product: ${product.name || ""}`,
+            `Price: ₹${product.price || ""}`,
+            `Category: ${product.category || "N/A"}`,
+            `Code: ${product.code || "N/A"}`
+        ].join("\n");
 
 
     return (
         "https://wa.me/" +
         phoneNumber +
         "?text=" +
-        message
+        encodeURIComponent(
+            message
+        )
     );
 
 }
 
 
-// ==========================================
-// DISPLAY PRODUCTS
-// ==========================================
+/* ==========================================
+   DISPLAY PRODUCTS
+========================================== */
 
 async function displayProducts() {
+
+    /*
+       IMPORTANT:
+
+       If this page does not have
+       #productContainer, simply stop.
+
+       No console error.
+    */
 
     const container =
         document.getElementById(
@@ -183,124 +415,272 @@ async function displayProducts() {
 
     if (!container) {
 
-        console.log(
-            "productContainer not found."
-        );
-
         return;
 
     }
+
+
+    container.innerHTML =
+        `
+            <div class="products-loading">
+                Loading products...
+            </div>
+        `;
 
 
     const products =
         await getProducts();
 
 
-    container.innerHTML = "";
+    container.innerHTML =
+        "";
 
 
-    if (products.length === 0) {
+    if (
+        products.length === 0
+    ) {
 
         container.innerHTML =
-            "<p>No products available yet.</p>";
+            `
+                <p>
+                    No products available yet.
+                </p>
+            `;
 
         return;
 
     }
 
 
-    products.forEach(product => {
+    products.forEach(
+        function (product) {
 
-        const images =
-            getProductImages(product);
-
-
-        const firstImage =
-            images.length > 0
-                ? images[0]
-                : "";
+            const images =
+                getProductImages(
+                    product
+                );
 
 
-        const card =
-            document.createElement("div");
+            const firstImage =
+                images.length > 0
+                    ? images[0]
+                    : "";
 
 
-        card.className =
-            "product-card";
+            const card =
+                document.createElement(
+                    "div"
+                );
 
 
-        card.innerHTML = `
+            card.className =
+                "product-card";
 
-            <a
-                href="product.html?id=${product.id}"
-                class="product-link"
-            >
 
-                <div class="product-image">
+            /* =================================
+               IMAGE
+            ================================= */
 
-                    ${
-                        firstImage
+            let imageHTML;
 
-                        ?
 
-                        `
+            if (firstImage) {
+
+                imageHTML =
+                    `
                         <img
-                            src="${firstImage}"
-                            alt="${product.name || "Kahaf Fashion Product"}"
+                            src="${escapeHTML(firstImage)}"
+                            alt="${escapeHTML(
+                                product.name ||
+                                "Kahaf Fashion Product"
+                            )}"
                             loading="lazy"
                             class="product-img"
+                            referrerpolicy="no-referrer"
                         >
-                        `
+                    `;
 
-                        :
+            } else {
 
-                        `
+                imageHTML =
+                    `
                         <div class="no-image">
-                            NO IMAGE
+                            IMAGE NOT AVAILABLE
                         </div>
-                        `
+                    `;
+
+            }
+
+
+            /* =================================
+               CARD
+            ================================= */
+
+            card.innerHTML =
+                `
+
+                    <a
+                        href="product.html?id=${encodeURIComponent(
+                            product.id
+                        )}"
+                        class="product-link"
+                    >
+
+                        <div class="product-image">
+
+                            ${imageHTML}
+
+                        </div>
+
+                    </a>
+
+
+                    <div class="product-info">
+
+                        <h3>
+                            ${escapeHTML(
+                                product.name ||
+                                "Unnamed Product"
+                            )}
+                        </h3>
+
+
+                        <p>
+                            ₹${product.price || 0}
+                        </p>
+
+
+                        <a
+                            class="whatsapp-btn"
+                            href="${createWhatsAppLink(
+                                product
+                            )}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Order on WhatsApp
+                        </a>
+
+                    </div>
+
+                `;
+
+
+            container.appendChild(
+                card
+            );
+
+
+            /* =================================
+               IMAGE ERROR HANDLING
+            ================================= */
+
+            const productImage =
+                card.querySelector(
+                    ".product-img"
+                );
+
+
+            if (productImage) {
+
+                productImage.addEventListener(
+                    "error",
+                    function () {
+
+                        console.warn(
+                            "Product image failed:",
+                            firstImage
+                        );
+
+
+                        this.style.display =
+                            "none";
+
+
+                        const noImage =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        noImage.className =
+                            "no-image";
+
+
+                        noImage.textContent =
+                            "IMAGE NOT AVAILABLE";
+
+
+                        this
+                            .parentElement
+                            .appendChild(
+                                noImage
+                            );
+
                     }
+                );
 
-                </div>
+            }
 
-            </a>
-
-
-            <div class="product-info">
-
-                <h3>
-                    ${product.name || "Unnamed Product"}
-                </h3>
-
-
-                <p>
-                    ₹${product.price || 0}
-                </p>
-
-
-                <a
-                    class="whatsapp-btn"
-                    href="${createWhatsAppLink(product)}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Order on WhatsApp
-                </a>
-
-            </div>
-
-        `;
-
-
-        container.appendChild(card);
-
-    });
+        }
+    );
 
 }
 
 
-// ==========================================
-// START
-// ==========================================
+/* ==========================================
+   HTML ESCAPE
+========================================== */
 
-displayProducts();
+function escapeHTML(
+    value
+) {
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+/* ==========================================
+   START
+========================================== */
+
+/*
+   Run only when the page actually contains
+   #productContainer.
+*/
+
+if (
+    document.getElementById(
+        "productContainer"
+    )
+) {
+
+    displayProducts();
+
+}

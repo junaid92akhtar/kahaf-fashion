@@ -72,23 +72,273 @@ let editingProductId = null;
 IMAGE PREVIEW
 ===================================== */
 
+/* =====================================
+IMAGE LINK SYSTEM
+===================================== */
+
+/*
+Supported:
+1. Direct image URL
+2. Google Drive share link
+3. Google Photos image URL
+4. Pexels direct image URL
+5. Any normal HTTPS image URL
+*/
+
 if (imageLinksInput) {
 
+    imageLinksInput.addEventListener(
+        "input",
+        function () {
 
-imageLinksInput.addEventListener(
-    "input",
-    function () {
+            showImagePreview(
+                imageLinksInput.value
+            );
 
-        showImagePreview(
-            imageLinksInput.value
-        );
-
-    }
-);
-
+        }
+    );
 
 }
 
+
+/* =====================================
+CONVERT IMAGE LINK
+===================================== */
+
+function convertImageLink(link) {
+
+    link = link.trim();
+
+    if (!link) {
+        return "";
+    }
+
+
+    /* ---------------------------------
+       GOOGLE DRIVE
+    --------------------------------- */
+
+    let driveMatch =
+        link.match(
+            /drive\.google\.com\/file\/d\/([^/]+)/
+        );
+
+
+    if (driveMatch) {
+
+        const fileId =
+            driveMatch[1];
+
+        return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
+    }
+
+
+    /* Google Drive open?id= */
+    let driveOpenMatch =
+        link.match(
+            /drive\.google\.com\/open\?id=([^&]+)/
+        );
+
+
+    if (driveOpenMatch) {
+
+        const fileId =
+            driveOpenMatch[1];
+
+        return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
+    }
+
+
+    /* Google Drive thumbnail already */
+    if (
+        link.includes(
+            "drive.google.com/thumbnail"
+        )
+    ) {
+
+        return link;
+    }
+
+
+    /* ---------------------------------
+       GOOGLE PHOTOS
+    --------------------------------- */
+
+    if (
+        link.includes(
+            "lh3.googleusercontent.com"
+        )
+    ) {
+
+        /*
+        If size parameter is already present,
+        keep the URL.
+        */
+
+        if (
+            /=[wWhH]\d+/.test(link)
+        ) {
+
+            return link;
+
+        }
+
+
+        /*
+        Add display size
+        */
+
+        return link + "=w1600-h1200";
+    }
+
+
+    /* ---------------------------------
+       NORMAL IMAGE URL
+    --------------------------------- */
+
+    return link;
+
+}
+
+
+/* =====================================
+SHOW IMAGE PREVIEW
+===================================== */
+
+function showImagePreview(value) {
+
+    if (!imagePreview) return;
+
+
+    const links =
+        value
+            .split("\n")
+            .map(link => link.trim())
+            .filter(link => link !== "");
+
+
+    imagePreview.innerHTML = "";
+
+
+    links.forEach(
+        function (originalLink) {
+
+            const imageURL =
+                convertImageLink(
+                    originalLink
+                );
+
+
+            const wrapper =
+                document.createElement("div");
+
+
+            wrapper.style.display =
+                "inline-flex";
+
+            wrapper.style.flexDirection =
+                "column";
+
+            wrapper.style.alignItems =
+                "center";
+
+            wrapper.style.margin =
+                "5px";
+
+
+            const img =
+                document.createElement("img");
+
+
+            img.src =
+                imageURL;
+
+
+            img.alt =
+                "Product image";
+
+
+            img.referrerPolicy =
+                "no-referrer";
+
+
+            img.style.width =
+                "100px";
+
+            img.style.height =
+                "100px";
+
+            img.style.objectFit =
+                "cover";
+
+            img.style.borderRadius =
+                "8px";
+
+            img.style.border =
+                "1px solid #ddd";
+
+
+            /* ---------------------------------
+               SUCCESS
+            --------------------------------- */
+
+            img.onload =
+                function () {
+
+                    status.textContent =
+                        "✓";
+
+                    status.style.color =
+                        "green";
+
+                };
+
+
+            /* ---------------------------------
+               ERROR
+            --------------------------------- */
+
+            img.onerror =
+                function () {
+
+                    status.textContent =
+                        "✕";
+
+                    status.style.color =
+                        "red";
+
+                    console.error(
+                        "Image failed:",
+                        imageURL
+                    );
+
+                };
+
+
+            const status =
+                document.createElement("span");
+
+
+            status.textContent =
+                "Loading...";
+
+            status.style.fontSize =
+                "12px";
+
+
+            wrapper.appendChild(img);
+
+            wrapper.appendChild(status);
+
+
+            imagePreview.appendChild(
+                wrapper
+            );
+
+        }
+    );
+
+}
 function showImagePreview(value) {
 
 
@@ -379,15 +629,15 @@ productForm.addEventListener(
                 .trim();
 
 
-        const imageLinks =
-            imageLinksInput
-                ? imageLinksInput.value
-                    .split("\n")
-                    .map(link => link.trim())
-                    .filter(link => link !== "")
-                : [];
-
-
+const imageLinks =
+    imageLinksInput
+        ? imageLinksInput.value
+            .split("\n")
+            .map(link => link.trim())
+            .filter(link => link !== "")
+            .map(link => convertImageLink(link))
+        : [];
+        
         if (!name || !price) {
 
             alert(
